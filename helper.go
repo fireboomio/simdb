@@ -1,11 +1,12 @@
 package simdb
 
 import (
-	"os"
-	"strings"
-	"fmt"
-	"strconv"
+	"encoding/json"
 	"errors"
+	"fmt"
+	"os"
+	"strconv"
+	"strings"
 )
 
 func createDirIfNotExist(dir string) error {
@@ -16,12 +17,10 @@ func createDirIfNotExist(dir string) error {
 	return err
 }
 
-
 func mergeToExisting(array []interface{}, entity interface{}) ([]interface{}, error) {
 	array = append(array, entity)
 	return array, nil
 }
-
 
 // getNestedValue fetch nested value from node
 func getNestedValue(input interface{}, node string) (interface{}, error) {
@@ -117,4 +116,18 @@ func length(v interface{}) (int, error) {
 		return len(val), nil
 	}
 	return -1, errors.New("invalid type for length")
+}
+
+func InterfaceToString(i interface{}) string {
+	switch v := i.(type) {
+	case string:
+		return v
+	case int:
+		return strconv.Itoa(v)
+	case bool:
+		return strconv.FormatBool(v)
+	default:
+		bytes, _ := json.Marshal(v)
+		return string(bytes)
+	}
 }
