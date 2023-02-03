@@ -2,6 +2,7 @@
 package simdb
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -219,9 +220,9 @@ func (d *Driver) AsEntity(output interface{}) (err error) {
 	if err != nil {
 		return err
 	}
-	d := json.NewDecoder(bytes.NewBuffer(outByte))
-	d.UseNumber()
-	err = d.Decode(output)
+	decode := json.NewDecoder(bytes.NewBuffer(outByte))
+	decode.UseNumber()
+	err = decode.Decode(output)
 	return
 }
 
