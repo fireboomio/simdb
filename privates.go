@@ -36,7 +36,9 @@ func (d *Driver) openDB(entity interface{}) ([]interface{}, error) {
 		return nil, readErr
 	}
 	array := make([]interface{}, 0)
-	json.Unmarshal(b, &array)
+	d := json.NewDecoder(bytes.NewBuffer(b))
+	d.UseNumber()
+	d.Decode(&array)
 
 	return array, nil
 }
