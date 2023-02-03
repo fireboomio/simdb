@@ -1,6 +1,7 @@
 package simdb
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -36,9 +37,9 @@ func (d *Driver) openDB(entity interface{}) ([]interface{}, error) {
 		return nil, readErr
 	}
 	array := make([]interface{}, 0)
-	d := json.NewDecoder(bytes.NewBuffer(b))
-	d.UseNumber()
-	d.Decode(&array)
+	decode := json.NewDecoder(bytes.NewBuffer(b))
+	decode.UseNumber()
+	decode.Decode(&array)
 
 	return array, nil
 }
