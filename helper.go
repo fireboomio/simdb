@@ -59,7 +59,6 @@ func getNestedValue(input interface{}, node string) (interface{}, error) {
 			}
 		}
 	}
-
 	switch ret := input.(type) {
 	case json.Number:
 		input, _ = strconv.ParseFloat(string(ret), 64)
