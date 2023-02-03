@@ -219,7 +219,9 @@ func (d *Driver) AsEntity(output interface{}) (err error) {
 	if err != nil {
 		return err
 	}
-	err = json.Unmarshal(outByte, output)
+	d := json.NewDecoder(bytes.NewBuffer(outByte))
+	d.UseNumber()
+	err = d.Decode(output)
 	return
 }
 
